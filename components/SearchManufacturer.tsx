@@ -7,8 +7,8 @@ import { manufacturers } from '../constants/index';
 import { SearchManuFacturerProps } from '../types/index';
 
 const SearchManufacturer = ({
-  manufacturer,
-  setManuFacturer,
+  selected,
+  setSelected,
 }: SearchManuFacturerProps) => {
   const [query, setQuery] = useState('');
 
@@ -24,9 +24,8 @@ const SearchManufacturer = ({
 
   return (
     <div className="search-manufacturer">
-      <Combobox value={manufacturer} onChange={setManuFacturer}>
+      <Combobox value={selected} onChange={setSelected}>
         <div className="relative w-full">
-          {/* Button for the combobox. Click on the icon to see the complete dropdown */}
           <Combobox.Button className="absolute top-[14px]">
             <Image
               src="/car-logo.svg"
@@ -40,7 +39,7 @@ const SearchManufacturer = ({
           <Combobox.Input
             className="search-manufacturer__input"
             displayValue={(item: string) => item}
-            onChange={(event) => setQuery(event.target.value)}
+            onChange={(event) => setQuery(event.target.value)} // Update the search query when the input changes
             placeholder="Volkswagen..."
           />
 
@@ -51,10 +50,7 @@ const SearchManufacturer = ({
             leaveTo="opacity-0"
             afterLeave={() => setQuery('')}
           >
-            <Combobox.Options
-              className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-              static
-            >
+            <Combobox.Options className="search-manufacturer__options" static>
               {filteredManufacturers.length === 0 && query !== '' ? (
                 <Combobox.Option
                   value={query}
